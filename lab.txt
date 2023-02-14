@@ -1,0 +1,41 @@
+CREATE TABLE University (
+  name VARCHAR(255) NOT NULL PRIMARY KEY,
+  location VARCHAR(255) NOT NULL,
+);
+
+CREATE TABLE Student (
+  id INT NOT NULL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  language VARCHAR(255),
+  university_name VARCHAR(255) FOREIGN KEY REFERENCES University(name)
+);
+
+CREATE TABLE Course (
+  name VARCHAR(255) NOT NULL,
+  credits int NOT NULL,
+  university_name VARCHAR(255) FOREIGN KEY REFERENCES University(name)
+);
+
+CREATE TABLE Course_student (
+  id NOT NULL PRIMARY KEY,
+  student_id int NOT NULL FOREIGN KEY REFERENCES Student(id),
+  course_name VARCHAR(255) FOREIGN KEY REFERENCES Course(name)
+);
+
+SELECT * from University where location='Russia';
+
+SELECT University.name FROM University
+RIGHT JOIN Student ON Student.university_name=University.name
+WHERE Student.language='Russian';
+
+SELECT University.name FROM University
+RIGHT JOIN Student ON Student.university_name=University.name
+WHERE University.name='Innopolis';
+
+SELECT University.name, Course.name FROM University
+RIGHT JOIN Course ON Course.university_name=University.name
+WHERE Course > 5;
+
+SELECT University.name FROM University
+RIGHT JOIN Student ON Student.university_name=University.name
+WHERE Student.language='English';
